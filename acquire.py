@@ -12,7 +12,7 @@ from pydataset import data
 
 
 # In[14]:
-
+#### lets acquire mall customers data
 
 def get_connection(db, user=user, host=host, password=password):
     '''
@@ -34,6 +34,28 @@ def new_titanic_data():
     sql_query = 'SELECT * FROM passengers'
     df = pd.read_sql(sql_query, get_connection('titanic_db'))
     df.to_csv('titanic_df.csv')
+    return df
+
+def new_mall_data():
+
+    ''' This function reads the mall data from codeup database into a df,
+     write it to a cv file, and returns the df '''
+     
+    sql_query = 'Select * FROM customers'
+    df = pd.read_sql(sql_query, get_connection('mall_customers'))
+    df.to_csv('mall_customers_df.csv')
+    return df
+
+
+def get_mall_data(cached=False):
+    '''
+    This function reads in mall customers data from Codeup database if cached == False 
+    or if cached == True reads in mall customers  df from a csv file, returns df
+    '''
+    if cached or os.path.isfile('mall_customers_df.csv') == False:
+        df = new_mall_data()
+    else:
+        df = pd.read_csv('mall_customers_df.csv', index_col=0)
     return df
 
 
