@@ -1,0 +1,4 @@
+my git ignore
+
+*.csv
+env.py
