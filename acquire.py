@@ -36,6 +36,48 @@ def new_titanic_data():
     df.to_csv('titanic_df.csv')
     return df
 
+
+def get_titanic_data(cached=False):
+    '''
+    This function reads in titanic data from Codeup database if cached == False 
+    or if cached == True reads in titanic df from a csv file, returns df
+    '''
+    if cached or os.path.isfile('titanic_df.csv') == False:
+        df = new_titanic_data()
+    else:
+        df = pd.read_csv('titanic_df.csv', index_col=0)
+    return df
+
+
+def new_telco_data():
+    '''This function reads the telco  data from the Codeup db into a df,
+    write it to a csv file, and returns the df.'''
+    query = '''select c.customer_id, c.gender, c.senior_citizen, c.partner, c.dependents, c.tenure, c.phone_service,
+        c.multiple_lines, c.internet_service_type_id, c.online_security, c.online_backup,c.device_protection, c.tech_support,
+        c.streaming_tv, c.streaming_movies, c.contract_type_id, c.paperless_billing, c.payment_type_id, c.monthly_charges, c.total_charges,c.churn, ct.contract_type, ist.internet_service_type, pt.payment_type
+        from customers c
+        join contract_types ct on ct.contract_type_id = c.contract_type_id
+        join internet_service_types ist on ist.internet_service_type_id = c.internet_service_type_id
+        join payment_types pt on pt.payment_type_id = c.payment_type_id'''
+    telco = pd.read_sql(query, get_connection('telco_churn'))
+    telco.to_csv('telco.csv')
+    return telco
+
+
+
+
+def get_telco_data(cached=False):
+    '''
+    This function reads in titanic data from Codeup database if cached == False 
+    or if cached == True reads in titanic df from a csv file, returns df
+    '''
+    if cached or os.path.isfile('telco.csv') == False:
+        telco = new_telco_data()
+    else:
+        telco = pd.read_csv('telco.csv', index_col=0)
+    return telco
+
+
 def new_mall_data():
 
     ''' This function reads the mall data from codeup database into a df,
@@ -62,16 +104,6 @@ def get_mall_data(cached=False):
 # In[16]:
 
 
-def get_titanic_data(cached=False):
-    '''
-    This function reads in titanic data from Codeup database if cached == False 
-    or if cached == True reads in titanic df from a csv file, returns df
-    '''
-    if cached or os.path.isfile('titanic_df.csv') == False:
-        df = new_titanic_data()
-    else:
-        df = pd.read_csv('titanic_df.csv', index_col=0)
-    return df
 
 
 # In[17]:
