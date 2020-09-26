@@ -81,7 +81,13 @@ def impute(train, test, validate, my_strategy, column_list):
 
 
 # In[ ]:
-
-
-
+def prep_mall_data(df):
+    '''
+    Takes the acquired mall data, does data preparation, and return train, test, 
+    and validate data splits.
+    '''
+    df['is_femae'] = (df.gender =='Female').astype('int')
+    train_validate, test = train_test_split(df, test_size =0.15, random_state = 123)
+    train, validate = train_test_split(train_validate, test_size = 0.15, random_state = 123)
+    return train, test, validate
 
