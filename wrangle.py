@@ -37,16 +37,22 @@ def scale_data(train, test, validate, scaler, cols_to_scale):
     train = pd.concat([train, pd.DataFrame(scaler.transform(train[cols_to_scale]), 
                                            index = train.index, columns = new_cols)], axis = 1)
     
+    train_scaled = train.drop(columns = cols_to_scale)
+    
     
     test =  pd.concat([test, pd.DataFrame(scaler.transform(test[cols_to_scale]), 
                                            index = test.index, columns = new_cols)], axis = 1)
     
     
+    test_scaled = test.drop(columns = cols_to_scale)
+    
     validate =  pd.concat([validate, pd.DataFrame(scaler.transform(validate[cols_to_scale]), 
                                            index = validate.index, columns = new_cols)], axis = 1)
-                                        
+     
+        
+    validate_scaled = validate.drop(columns = cols_to_scale)
                       
-    return train, test, validate     
+    return train_scaled, test_scaled, validate_scaled     
 
 
 

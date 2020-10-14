@@ -86,7 +86,9 @@ def prep_mall_data(df):
     Takes the acquired mall data, does data preparation, and return train, test, 
     and validate data splits.
     '''
+    df = df.drop(columns = 'Unnamed: 0')
     df['is_female'] = (df.gender =='Female').astype('int')
+    df = df.drop(columns = ['gender', 'customer_id'])
     train_validate, test = train_test_split(df, test_size =0.15, random_state = 123)
     train, validate = train_test_split(train_validate, test_size = 0.15, random_state = 123)
     return train, test, validate
